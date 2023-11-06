@@ -1,0 +1,24 @@
+{
+    "name": "my-work",
+    "version": "1.0.0",
+    "description": "lesson-05",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "hardhat"
+    ],
+    "author": "Eric Hamery",
+    "license": "ISC",
+    "devDependencies": {
+        "@nomicfoundation/hardhat-toolbox": "3.0.0",
+        "hardhat": "2.18.3"
+    },
+    "dependencies": {
+        "@commander-js/extra-typings": "11.1.0",
+        "commander": "11.1.0",
+        "dotenv": "16.3.1"
+    }
+}

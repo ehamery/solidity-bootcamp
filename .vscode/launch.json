@@ -1,0 +1,55 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        // https://code.visualstudio.com/docs/nodejs/nodejs-debugging
+        // https://code.visualstudio.com/docs/editor/variables-reference
+        // workspaceRoot is deprecated
+        // https://typestrong.org/ts-node/docs/recipes/visual-studio-code/
+        {
+            "name": "deploy",
+            "type": "node",
+            "request": "launch",
+            "runtimeArgs": [
+                "-r", "ts-node/register"
+            ],
+            "args": [
+                "scripts/ballot.ts",
+                "deploy",
+                "-p", "bitcoin, ethereum, solana, polkadot, tezos",
+                // "--dry-run"
+            ],
+            "skipFiles": [
+                "<node_internals>/**",
+            ],
+            // "outFiles": [
+            //     "${workspaceFolder}/**/*.js"
+            // ]
+            "outputCapture": "std" // to get the logs from commander
+        },
+        {
+            "name": "command",
+            "type": "node",
+            "request": "launch",
+            "runtimeArgs": [
+                "-r", "ts-node/register"
+            ],
+            "args": [
+                "scripts/ballot.ts",
+                // "giveRightToVote", "0x46e892554b33B92Ac8112b63b76A5BEDe2DA0Cf1", "0x0f2C9cB05dd2aA63EDE2026697ED1bB6c03d326F"
+                // "vote", "0x46e892554b33B92Ac8112b63b76A5BEDe2DA0Cf1", "4"//, "--dry-run"
+                // "votes", "0xec5bfec0298b373a6b57cb4f0b4403fcb5dae33a",
+                // "votes", "0x46e892554b33B92Ac8112b63b76A5BEDe2DA0Cf1",
+                // "winnerName", "0xec5bfec0298b373a6b57cb4f0b4403fcb5dae33a",
+                // "winningProposal", "0xec5bfec0298b373a6b57cb4f0b4403fcb5dae33a",
+                "voters", "0x46e892554b33B92Ac8112b63b76A5BEDe2DA0Cf1", "0xACBed006aC55C6480cc172141a61F02137CAb0Cc"
+            ],
+            "skipFiles": [
+                "<node_internals>/**",
+            ],
+            "outputCapture": "std" // to get the logs from commander
+        }
+    ]
+}
