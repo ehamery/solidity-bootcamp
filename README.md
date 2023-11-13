@@ -10,4 +10,10 @@ npx hardhat test
 REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat run scripts/deploy.ts
+
+npm install
+
+node -r ts-node/register scripts/ballot.ts
+or
+npx ts-node scripts/ballot.ts
 ```

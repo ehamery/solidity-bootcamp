@@ -4,45 +4,16 @@ import { Command } from '@commander-js/extra-typings';
 import type { Provider } from 'ethers';
 import { ethers, Wallet } from 'ethers';
 import { Ballot, Ballot__factory } from '../typechain-types';
-import 'dotenv/config';
-// import { BallotInterface } from '../typechain-types/Ballot';
+import { getProvider, getWallet } from './helper';
+import {
+    getPackageJson,
+    parseIntBase10,
+    commaSeparatedListToArray
+ } from './commanderHelper';
 
 type Proposal = [string, bigint] & {
     name: string;
     voteCount: bigint;
-}
-
-// console.log('START');
-const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
-
-function commaSeparatedList(list: string): Array<string> {
-    console.debug('list:', list);
-    const array = list.split(',');
-    const { length } = array;
-    for (let i = 0; i < length; i++) {
-        array[i] = array[i].trim();
-    }
-    return array;
-}
-
-function parseIntBase10(value: any): number {
-    return parseInt(value, 10);
-}
-
-function getProvider(): Provider {
-    const { RPC_ENDPOINT_URL } = process.env;
-    if (!RPC_ENDPOINT_URL) {
-        throw new Error(`RPC_ENDPOINT_URL is not an environment variable`);
-    }
-    return new ethers.JsonRpcProvider(RPC_ENDPOINT_URL);
-}
-
-function getWallet(provider?: Provider): Wallet {
-    const { PRIVATE_KEY } = process.env;
-    if (!PRIVATE_KEY) {
-        throw new Error(`PRIVATE_KEY is not an environment variable`);
-    }
-    return new ethers.Wallet(PRIVATE_KEY, provider);
 }
 
 async function getBallotContractFrom(contractAddress: string): Promise<Ballot> {
@@ -75,7 +46,9 @@ async function getProposals(ballotContract: Ballot, count = 20):  Promise<Array<
     return proposalStructs;
 }
 
+// console.log('START');
 const command = new Command();
+const packageJson = getPackageJson();
 
 /*
  * https://github.com/tj/commander.js
@@ -91,7 +64,6 @@ const command = new Command();
  * So 'parseInt, 10' will return parseInt(var, 10) if the option is used, but 10
  * as a default value if the option is not used..
  */
-
 command
     .name('ballot')
     .description('CLI to ballot contract')
@@ -112,7 +84,6 @@ command
             if (balanceBigInt < 0.01) {
                 console.warn('balance is too low to deploy the ballot contract')
             }
-
         } catch (error) {
             console.error('error:', error);
             process.exitCode = 1;
@@ -122,8 +93,8 @@ command
 
 command
     .command('deploy')
-    .description('deploy ballot smart contract')
-    .requiredOption('-p, --proposals []', 'comma separated proposals', commaSeparatedList)
+    .description('deploy ballot contract')
+    .requiredOption('-p, --proposals []', 'comma separated proposals', commaSeparatedListToArray)
     .option('--dry-run', 'does not deploy the contract', false)
     .action(async (options, commands): Promise<void> => {
         console.log('***** deploy ---->');
@@ -283,7 +254,6 @@ command
             console.log(`voting for proposals[${proposalIndex}]: '${proposal}'...`);
             await transactionResponse.wait();
             console.log(`...voted, transaction hash: '${hash}'`);
-
         } catch (error) {
             console.error('error:', error);
             process.exitCode = 1;

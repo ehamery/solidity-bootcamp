@@ -30,7 +30,7 @@
             "outputCapture": "std" // to get the logs from commander
         },
         {
-            "name": "command",
+            "name": "ballot",
             "type": "node",
             "request": "launch",
             "runtimeArgs": [
@@ -39,12 +39,34 @@
             "args": [
                 "scripts/ballot.ts",
                 // "giveRightToVote", "0x46e892554b33B92Ac8112b63b76A5BEDe2DA0Cf1", "0x0f2C9cB05dd2aA63EDE2026697ED1bB6c03d326F"
-                // "vote", "0x46e892554b33B92Ac8112b63b76A5BEDe2DA0Cf1", "4"//, "--dry-run"
+                // "vote", "0x46e892554b33B92Ac8112b63b76A5BEDe2DA0Cf1", "4"
                 // "votes", "0xec5bfec0298b373a6b57cb4f0b4403fcb5dae33a",
                 // "votes", "0x46e892554b33B92Ac8112b63b76A5BEDe2DA0Cf1",
                 // "winnerName", "0xec5bfec0298b373a6b57cb4f0b4403fcb5dae33a",
                 // "winningProposal", "0xec5bfec0298b373a6b57cb4f0b4403fcb5dae33a",
                 "voters", "0x46e892554b33B92Ac8112b63b76A5BEDe2DA0Cf1", "0xACBed006aC55C6480cc172141a61F02137CAb0Cc"
+                // "--dry-run"
+            ],
+            "skipFiles": [
+                "<node_internals>/**",
+            ],
+            "outputCapture": "std" // to get the logs from commander
+        },
+        {
+            "name": "myErc20TokenVotes",
+            "type": "node",
+            "request": "launch",
+            "runtimeArgs": [
+                "-r", "ts-node/register"
+            ],
+            "args": [
+                "scripts/myErc20TokenVotes.ts",
+                // "deploy-token-contract",
+                // "mint-tokens", "0xfec09E5b686707D8B4409D72C2383c99E528942D", "0xACBed006aC55C6480cc172141a61F02137CAb0Cc", "99.999999999999999900",
+                // "mint-tokens", "0xfec09E5b686707D8B4409D72C2383c99E528942D", "0xed3cEc444F3c79A433B49ff6CD1f8BB7b8Ad7454", "100",
+                // "balance", "0xfec09E5b686707D8B4409D72C2383c99E528942D",
+                "voting-power", "0xfec09E5b686707D8B4409D72C2383c99E528942D",// "0x6912de196118F7e53c4Af94c35E783D7af7b3552"
+                // "--dry-run"
             ],
             "skipFiles": [
                 "<node_internals>/**",
